@@ -32,12 +32,15 @@ const isRouterRoute = (route: BaseRoute): route is RouterRoute =>
 const isRoute = (route: BaseRoute): route is Route =>
 	(route as unknown as any).method !== undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-export const applyRoutes = (app: Express, routes: Routes) => {
+export const applyRoutes = (app: Express, routes: Routes, baseUri = '') => {
 	routes.forEach((route) => {
 		if (isRoute(route)) {
-			app[route.method](route.uri, route.handler);
+			app[route.method](`${baseUri}${route.uri}`, route.handler);
 		} else if (isRouterRoute(route)) {
-			// TODO finish this
+			applyRoutes(app, route.children, `${baseUri}${route.uri}`);
+		} else {
+			// TODO how to handle this?
+			throw new Error('Should never happen');
 		}
 	});
 };
