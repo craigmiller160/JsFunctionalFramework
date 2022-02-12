@@ -4,3 +4,4 @@
 4) Type definitions
 5) Request Body types
 6) Response body types
+7) Error handler
