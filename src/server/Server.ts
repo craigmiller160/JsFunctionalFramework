@@ -1,9 +1,9 @@
 import { RouteHandler } from '../routing/RouteHandler';
 import * as http from 'node:http';
 
-export type Route<Return> = (uri: string, routeHandler: RouteHandler) => Return;
+type Route<Return> = (uri: string, routeHandler: RouteHandler) => Return;
 
-export interface Routes<Return> {
+interface Routes<Return> {
 	readonly get: Route<Return>;
 	readonly post: Route<Return>;
 	readonly put: Route<Return>;
