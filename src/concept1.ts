@@ -52,49 +52,6 @@ const routeHandler: RouteHandler = (req) => {
 
 export const createConcept1 = (app: Express) => {
 	app.get('/concept1/hello', (req, res, next) => {
-		const fnRes = pipe(
-			Try.tryCatch(() =>
-				routeHandler({
-					uriInfo: {
-						path: req.path,
-						params: req.params,
-						query: req.query
-					},
-					body: req.body,
-					headers: req.headers,
-					cookies: req.cookies
-				})
-			),
-			Either.fold(
-				(ex): FnResponse<any> => ({
-					error: ex
-				}),
-				identity
-			)
-		);
 
-		const resPromise = match(fnRes)
-			.with(instanceOf(Promise), (_) => _ as Promise<FnResponse<any>>)
-			.otherwise((_) => Promise.resolve(_ as FnResponse<any>));
-
-		pipe(
-			TaskTry.tryCatch(() => resPromise),
-			TaskEither.fold(
-				(ex) => async () => next(ex),
-				(theRes) => async () => {
-					if (theRes.error) {
-						next(theRes.error);
-					} else {
-						res.status(theRes.status ?? 500);
-						Object.entries(theRes.headers ?? {}).forEach(
-							([key, value]) => res.setHeader(key, value)
-						);
-						if (theRes.body) {
-							res.send(theRes.body); // TODO add more types and stuff
-						}
-					}
-				}
-			)
-		)();
 	});
 };
