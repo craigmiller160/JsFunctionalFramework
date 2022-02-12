@@ -1,8 +1,9 @@
-import { addRoutes } from './demo';
-import { createServer } from './server/createServer';
+import { createServer } from './server/Server';
+import { routes } from './demo';
 
-const server = createServer();
-addRoutes(server);
+const server = createServer({
+	routes
+});
 
 server
 	.listen(8080)
