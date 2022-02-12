@@ -2,3 +2,5 @@
 2) Server/HTTPS support
 3) Security support
 4) Type definitions
+5) Request Body types
+6) Response body types
