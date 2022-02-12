@@ -11,6 +11,7 @@ export interface FnRouter {
 	readonly post: Route<FnRouter>;
 	readonly put: Route<FnRouter>;
 	readonly delete: Route<FnRouter>;
+	readonly done: () => FnServer;
 }
 
 export interface FnServer {
@@ -21,6 +22,32 @@ export interface FnServer {
 	readonly route: (baseUri: string) => FnRouter;
 	readonly listen: (port: number) => Promise<void>;
 }
+
+const createRouter = (
+	server: FnServer,
+	app: Express,
+	baseUri: string
+): FnRouter => ({
+	get(uri, routeHandler) {
+		app.get(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	post(uri, routeHandler) {
+		app.post(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	put(uri, routeHandler) {
+		app.put(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	delete(uri, routeHandler) {
+		app.delete(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	done() {
+		return server;
+	}
+});
 
 export const createServer = (
 	configureExpress?: (app: Express) => void
@@ -44,24 +71,9 @@ export const createServer = (
 			app.delete(uri, translate(routeHandler));
 			return this;
 		},
-		route: (baseUri) => ({
-			get(uri, routeHandler) {
-				app.get(`${baseUri}${uri}`, translate(routeHandler));
-				return this;
-			},
-			post(uri, routeHandler) {
-				app.post(`${baseUri}${uri}`, translate(routeHandler));
-				return this;
-			},
-			put(uri, routeHandler) {
-				app.put(`${baseUri}${uri}`, translate(routeHandler));
-				return this;
-			},
-			delete(uri, routeHandler) {
-				app.delete(`${baseUri}${uri}`, translate(routeHandler));
-				return this;
-			}
-		}),
+		route(baseUri) {
+			return createRouter(this, app, baseUri);
+		},
 		listen: (port) => new Promise((resolve) => app.listen(port, resolve))
 	};
 };
