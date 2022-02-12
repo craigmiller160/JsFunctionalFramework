@@ -54,27 +54,27 @@ export const routes: Routes = [
 		children: [
 			{
 				uri: '/basic',
-				method: 'GET',
+				method: 'get',
 				handler: basic
 			},
 			{
 				uri: '/promise',
-				method: 'GET',
+				method: 'get',
 				handler: promise
 			},
 			{
 				uri: '/error',
-				method: 'GET',
+				method: 'get',
 				handler: error
 			},
 			{
 				uri: '/errorPromise',
-				method: 'GET',
+				method: 'get',
 				handler: errorPromise
 			},
 			{
 				uri: '/errorReturned',
-				method: 'GET',
+				method: 'get',
 				handler: errorReturned
 			}
 		]

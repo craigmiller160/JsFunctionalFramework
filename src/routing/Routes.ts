@@ -1,15 +1,16 @@
 import { RouteHandler } from './RouteHandler';
+import { Express } from 'express';
 
 export type Method =
-	| 'GET'
-	| 'POST'
-	| 'PUT'
-	| 'DELETE'
-	| 'HEAD'
-	| 'CONNECT'
-	| 'OPTIONS'
-	| 'TRACE'
-	| 'PATCH';
+	| 'get'
+	| 'post'
+	| 'put'
+	| 'delete'
+	| 'head'
+	| 'connect'
+	| 'options'
+	| 'trace'
+	| 'patch';
 
 interface BaseRoute {
 	readonly uri: string;
@@ -25,3 +26,18 @@ export interface RouterRoute extends BaseRoute {
 }
 
 export type Routes = ReadonlyArray<RouterRoute | Route>;
+
+const isRouterRoute = (route: BaseRoute): route is RouterRoute =>
+	(route as unknown as any).children !== undefined;
+const isRoute = (route: BaseRoute): route is Route =>
+	(route as unknown as any).method !== undefined;
+
+export const applyRoutes = (app: Express, routes: Routes) => {
+	routes.forEach((route) => {
+		if (isRoute(route)) {
+			app[route.method](route.uri, route.handler);
+		} else if (isRouterRoute(route)) {
+
+		}
+	})
+}

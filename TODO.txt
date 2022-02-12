@@ -4,3 +4,5 @@
 5) Request Body types
 6) Response body types
 7) Error handler
+8) path params
+9) query params
