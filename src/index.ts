@@ -1,5 +1,5 @@
 import { addRoutes } from './demo';
-import { createServer } from './server/ServerCreator';
+import { createServer } from './server/createServer';
 
 const server = createServer();
 addRoutes(server);
