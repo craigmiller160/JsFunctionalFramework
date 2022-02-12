@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { FnRequest } from '../routing/components/FnRequest';
 import { FnResponse } from '../routing/components/FnResponse';
-import { FnServer } from '../server/createServer';
+import { FnServer } from '../server/Server';
 
 const basic = (req: FnRequest<any>): FnResponse<any> => {
 	return {
