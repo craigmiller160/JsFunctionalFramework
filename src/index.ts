@@ -1,12 +1,10 @@
-import express from 'express';
 import { addRoutes } from './demo';
+import { createServer } from './server/ServerCreator';
 
-const app = express();
-app.get('/hello', (req, res) => {
-	res.send('Hello World');
-});
-addRoutes(app);
+const server = createServer();
+addRoutes(server);
 
-app.listen(8080, () => {
-	console.error('Listening on port 8080');
-});
+server
+	.listen(8080)
+	.then(() => console.error('Listening on port 8080'))
+	.catch((ex) => console.error(ex));

@@ -17,10 +17,10 @@ export interface FnServer extends FnRouter {
 }
 
 export const createServer = (
-	configureExpress: (app: Express) => void
+	configureExpress?: (app: Express) => void
 ): FnServer => {
 	const app = express();
-	configureExpress(app);
+	configureExpress?.(app);
 	return {
 		get: (uri, routeHandler) => app.get(uri, translate(routeHandler)),
 		post: (uri, routeHandler) => app.post(uri, translate(routeHandler)),
