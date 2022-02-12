@@ -1,14 +1,28 @@
-import { FnHeaders } from '../FnHeaders';
+import http from 'http';
 
-// TODO do I really want these both separate?
-//  If so, probably shouldn't curry them? Or should I?
+export const getHeaders = (
+	headers: http.IncomingHttpHeaders,
+	key: string
+): ReadonlyArray<string> => {
+	const result = headers[key] ?? [];
+	if (result instanceof Array) {
+		return result;
+	}
+	return [result];
+};
 
-export const getHeaders =
-	(headers: FnHeaders) =>
-	(key: string): ReadonlyArray<string> =>
-		headers[key] ?? [];
+export const getFirstHeader = (
+	headers: http.IncomingHttpHeaders,
+	key: string
+): string | undefined => {
+	const result = headers[key];
+	if (!result) {
+		return undefined;
+	}
 
-export const getHeader =
-	(headers: FnHeaders) =>
-	(key: string): string | undefined =>
-		headers[key]?.[0];
+	if (result instanceof Array) {
+		return result[0];
+	}
+
+	return result;
+};
