@@ -4,17 +4,14 @@ import { applyRoutes, Routes } from '../routing/Routes';
 export interface FnServerConfig {
 	readonly configureExpress?: (app: Express) => void;
 	readonly routes: Routes;
+	readonly port: number;
 }
 
-export interface FnServer {
-	readonly listen: (port: number) => Promise<void>;
-}
+export type StartServer = () => Promise<void>;
 
-export const createServer = (config: FnServerConfig): FnServer => {
+export const createServer = (config: FnServerConfig): StartServer => {
 	const app = express();
 	config.configureExpress?.(app);
 	applyRoutes(app, config.routes);
-	return {
-		listen: (port) => new Promise((resolve) => app.listen(port, resolve))
-	};
+	return () => new Promise((resolve) => app.listen(config.port, resolve));
 };
