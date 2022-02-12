@@ -1,5 +1,5 @@
-export interface UriInfo {
+export interface UriInfo<Query, Params> {
 	readonly path: string;
-	readonly query: object; // TODO type this
-	readonly params: object; // TODO type this
+	readonly query: Query;
+	readonly params: Params;
 }
