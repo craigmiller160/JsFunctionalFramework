@@ -43,8 +43,7 @@ export const applyRoutes = (app: Express, routes: Routes, baseUri = '') => {
 		} else if (isRouterRoute(route)) {
 			applyRoutes(app, route.children, `${baseUri}${route.uri}`);
 		} else {
-			// TODO how to handle this?
-			throw new Error('Should never happen');
+			throw new Error('Unknown route type');
 		}
 	});
 };
