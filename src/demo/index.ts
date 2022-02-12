@@ -38,10 +38,11 @@ const errorReturned = (req: FnRequest<any>): FnResponse<any> => {
 };
 
 export const addRoutes = (server: FnServer) => {
-	const router = server.route('/demo');
-	router.get('/basic', basic);
-	router.get('/promise', promise);
-	router.get('/error', error);
-	router.get('/errorPromise', errorPromise);
-	router.get('/errorReturned', errorReturned);
+	server
+		.route('/demo')
+		.get('/basic', basic)
+		.get('/promise', promise)
+		.get('/error', error)
+		.get('/errorPromise', errorPromise)
+		.get('/errorReturned', errorReturned);
 };
