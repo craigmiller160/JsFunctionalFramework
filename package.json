@@ -25,6 +25,8 @@
     "*.{ts,tsx}": "yarn lint"
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "@craigmiller160/ts-functions": "^1.1.0-beta.10",
+    "express": "^4.17.2",
+    "fp-ts": "^2.11.8"
   }
 }

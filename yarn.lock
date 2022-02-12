@@ -349,6 +349,11 @@
   dependencies:
     prettier "^2.5.1"
 
+"@craigmiller160/ts-functions@^1.1.0-beta.10":
+  version "1.1.0-beta.10"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/ts-functions/-/ts-functions-1.1.0-beta.10.tgz#3dd5f0a8ff87094172c0048a8d6e276d249a0715"
+  integrity sha512-FflYbwTkTs6XsF4tS+nZEE2/PHENZiBOLxY3R/zPvevJfTr11n1HKnp3cFSMdHbApcyF4JLRXEH7Dqbn93Zanw==
+
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
   resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@cspotcode/source-map-consumer/-/source-map-consumer-0.8.0.tgz#33bf4b7b39c178821606f669bbc447a6a629786b"
@@ -1874,6 +1879,11 @@ forwarded@0.2.0:
   version "0.2.0"
   resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
+
+fp-ts@^2.11.8:
+  version "2.11.8"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/fp-ts/-/fp-ts-2.11.8.tgz#411cde116c446d568f5597b03352d8b3f98e8f82"
+  integrity sha512-WQT6rP6Jt3TxMdQB3IKzvfZKLuldumntgumLhIUhvPrukTHdWNI4JgEHY04Bd0LIOR9IQRpB+7RuxgUU0Vhmcg==
 
 fresh@0.5.2:
   version "0.5.2"
