@@ -1,39 +1,38 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { SimpleRequest } from '../routing/components/FnRequest';
 import { FnResponse } from '../routing/components/FnResponse';
 import { Routes } from '../routing/Routes';
 
-const basic = (req: SimpleRequest): FnResponse<any> => {
+const basic = (req: SimpleRequest): FnResponse<string> => {
 	return {
 		status: 200,
-		body: 'Hello World'
+		body: `Hello World: ${req.uriInfo.path}`
 	};
 };
 
-const promise = (req: SimpleRequest): Promise<FnResponse<any>> =>
+const promise = (req: SimpleRequest): Promise<FnResponse<string>> =>
 	new Promise((resolve) => {
 		setTimeout(() => {
 			resolve({
 				status: 200,
-				body: 'Hello World Async'
+				body: `Hello World Async: ${req.uriInfo.path}`
 			});
 		}, 2000);
 	});
 
-const error = (req: SimpleRequest): FnResponse<any> => {
-	throw new Error('Dying');
+const error = (req: SimpleRequest): FnResponse<string> => {
+	throw new Error(`Dying: ${req.uriInfo.path}`);
 };
 
-const errorPromise = (req: SimpleRequest): Promise<FnResponse<any>> =>
+const errorPromise = (req: SimpleRequest): Promise<FnResponse<string>> =>
 	new Promise((resolve, reject) => {
 		setTimeout(() => {
-			reject(new Error('Dying Async'));
+			reject(new Error(`Dying Async: ${req.uriInfo.path}`));
 		}, 2000);
 	});
 
-const errorReturned = (req: SimpleRequest): FnResponse<any> => {
+const errorReturned = (req: SimpleRequest): FnResponse<string> => {
 	return {
-		error: new Error('Returned Dying')
+		error: new Error(`Returned Dying: ${req.uriInfo.path}`)
 	};
 };
 
