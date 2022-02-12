@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Express } from 'express';
 import { instanceOf, match } from 'ts-pattern';
-import { identity } from 'fp-ts';
 import * as TaskTry from '@craigmiller160/ts-functions/TaskTry';
 import * as TaskEither from 'fp-ts/TaskEither';
 import { pipe } from 'fp-ts/function';
+import * as Try from '@craigmiller160/ts-functions/Try';
+import * as Either from 'fp-ts/Either';
+import { identity } from 'fp-ts/function';
 
 interface UriInfo {
 	readonly path: string;
@@ -23,7 +25,7 @@ interface FnRequest<ReqB> {
 }
 
 interface FnResponse<ResB> {
-	readonly status: number;
+	readonly status?: number;
 	readonly body?: ResB;
 	readonly headers?: object;
 	readonly error?: any;
@@ -35,24 +37,41 @@ type RouteHandler<ReqB = any, ResB = any> = (
 ) => RouteHandlerResult<ResB>;
 
 const routeHandler: RouteHandler = (req) => {
+	if (true) {
+		throw new Error('Dying');
+	}
+
 	return {
 		status: 200,
-		body: 'Hello World'
+		body: 'Hello World',
+		headers: {
+			abc: 'def'
+		}
 	};
 };
 
 export const createConcept1 = (app: Express) => {
 	app.get('/concept1/hello', (req, res, next) => {
-		const fnRes = routeHandler({
-			uriInfo: {
-				path: req.path,
-				params: req.params,
-				query: req.query
-			},
-			body: req.body,
-			headers: req.headers,
-			cookies: req.cookies
-		});
+		const fnRes = pipe(
+			Try.tryCatch(() =>
+				routeHandler({
+					uriInfo: {
+						path: req.path,
+						params: req.params,
+						query: req.query
+					},
+					body: req.body,
+					headers: req.headers,
+					cookies: req.cookies
+				})
+			),
+			Either.fold(
+				(ex): FnResponse<any> => ({
+					error: ex
+				}),
+				identity
+			)
+		);
 
 		const resPromise = match(fnRes)
 			.with(instanceOf(Promise), (_) => _ as Promise<FnResponse<any>>)
@@ -66,7 +85,7 @@ export const createConcept1 = (app: Express) => {
 					if (theRes.error) {
 						next(theRes.error);
 					} else {
-						res.status(theRes.status);
+						res.status(theRes.status ?? 500);
 						Object.entries(theRes.headers ?? {}).forEach(
 							([key, value]) => res.setHeader(key, value)
 						);
