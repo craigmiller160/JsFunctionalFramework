@@ -5,6 +5,9 @@ import { FnResponse } from './components/FnResponse';
 export type RouteHandlerResult<ResB> =
 	| FnResponse<ResB>
 	| Promise<FnResponse<ResB>>;
+
 export type RouteHandler<ReqB = any, ResB = any> = (
 	req: FnRequest<ReqB>
 ) => RouteHandlerResult<ResB>;
+
+export type SimpleRouteHandler<ResB> = RouteHandler<unknown, ResB>;

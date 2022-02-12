@@ -1,15 +1,14 @@
-import { SimpleRequest } from '../routing/components/FnRequest';
-import { FnResponse } from '../routing/components/FnResponse';
 import { Routes } from '../routing/Routes';
+import { SimpleRouteHandler } from '../routing/RouteHandler';
 
-const basic = (req: SimpleRequest): FnResponse<string> => {
+const basic: SimpleRouteHandler<string> = (req) => {
 	return {
 		status: 200,
 		body: `Hello World: ${req.uriInfo.path}`
 	};
 };
 
-const promise = (req: SimpleRequest): Promise<FnResponse<string>> =>
+const promise: SimpleRouteHandler<string> = (req) =>
 	new Promise((resolve) => {
 		setTimeout(() => {
 			resolve({
@@ -19,18 +18,18 @@ const promise = (req: SimpleRequest): Promise<FnResponse<string>> =>
 		}, 2000);
 	});
 
-const error = (req: SimpleRequest): FnResponse<string> => {
+const error: SimpleRouteHandler<string> = (req) => {
 	throw new Error(`Dying: ${req.uriInfo.path}`);
 };
 
-const errorPromise = (req: SimpleRequest): Promise<FnResponse<string>> =>
+const errorPromise: SimpleRouteHandler<string> = (req) =>
 	new Promise((resolve, reject) => {
 		setTimeout(() => {
 			reject(new Error(`Dying Async: ${req.uriInfo.path}`));
 		}, 2000);
 	});
 
-const errorReturned = (req: SimpleRequest): FnResponse<string> => {
+const errorReturned: SimpleRouteHandler<string> = (req) => {
 	return {
 		error: new Error(`Returned Dying: ${req.uriInfo.path}`)
 	};

@@ -1,7 +1,7 @@
 import { UriInfo } from './UriInfo';
 import { Session } from './Session';
 
-interface FnRequest<ReqB> {
+export interface FnRequest<ReqB> {
 	readonly uriInfo: UriInfo;
 	readonly body: ReqB;
 	readonly headers: object; // TODO type this
