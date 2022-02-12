@@ -13,6 +13,7 @@ export interface FnRouter {
 
 export interface FnServer extends FnRouter {
 	readonly route: (baseUri: string) => FnRouter;
+	readonly listen: (port: number) => Promise<void>;
 }
 
 export const createServer = (
@@ -34,6 +35,7 @@ export const createServer = (
 				app.put(`${baseUri}${uri}`, translate(routeHandler)),
 			delete: (uri, routeHandler) =>
 				app.delete(`${baseUri}${uri}`, translate(routeHandler))
-		})
+		}),
+		listen: (port) => new Promise((resolve) => app.listen(port, resolve))
 	};
 };
