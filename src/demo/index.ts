@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { FnRequest } from '../routing/components/FnRequest';
 import { FnResponse } from '../routing/components/FnResponse';
-import { FnServer } from '../server/Server';
-import { RouterRoute, Routes } from '../routing/Routes';
+import { Routes } from '../routing/Routes';
 
 const basic = (req: FnRequest<any>): FnResponse<any> => {
 	return {
@@ -36,16 +35,6 @@ const errorReturned = (req: FnRequest<any>): FnResponse<any> => {
 	return {
 		error: new Error('Returned Dying')
 	};
-};
-
-export const addRoutes = (server: FnServer) => {
-	server
-		.route('/demo')
-		.get('/basic', basic)
-		.get('/promise', promise)
-		.get('/error', error)
-		.get('/errorPromise', errorPromise)
-		.get('/errorReturned', errorReturned);
 };
 
 export const routes: Routes = [

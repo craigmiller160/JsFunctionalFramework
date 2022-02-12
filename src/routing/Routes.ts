@@ -28,16 +28,16 @@ export interface RouterRoute extends BaseRoute {
 export type Routes = ReadonlyArray<RouterRoute | Route>;
 
 const isRouterRoute = (route: BaseRoute): route is RouterRoute =>
-	(route as unknown as any).children !== undefined;
+	(route as unknown as any).children !== undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
 const isRoute = (route: BaseRoute): route is Route =>
-	(route as unknown as any).method !== undefined;
+	(route as unknown as any).method !== undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 export const applyRoutes = (app: Express, routes: Routes) => {
 	routes.forEach((route) => {
 		if (isRoute(route)) {
 			app[route.method](route.uri, route.handler);
 		} else if (isRouterRoute(route)) {
-
+			// TODO finish this
 		}
-	})
-}
+	});
+};
