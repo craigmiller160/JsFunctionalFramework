@@ -31,10 +31,17 @@ const errorPromise = (req: FnRequest<any>): Promise<FnResponse<any>> =>
 		}, 2000);
 	});
 
+const errorReturned = (req: FnRequest<any>): FnResponse<any> => {
+	return {
+		error: new Error('Returned Dying')
+	};
+};
+
 export const addRoutes = (server: FnServer) => {
 	const router = server.route('/demo');
 	router.get('/basic', basic);
 	router.get('/promise', promise);
 	router.get('/error', error);
 	router.get('/errorPromise', errorPromise);
+	router.get('/errorReturned', errorReturned);
 };
