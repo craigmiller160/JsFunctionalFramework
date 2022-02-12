@@ -5,20 +5,23 @@ import { translate } from '../routing/RouteTranslator';
 
 export type Route<Return> = (uri: string, routeHandler: RouteHandler) => Return;
 
-// TODO add more HTTP methods
-export interface FnRouter {
-	readonly get: Route<FnRouter>;
-	readonly post: Route<FnRouter>;
-	readonly put: Route<FnRouter>;
-	readonly delete: Route<FnRouter>;
+interface Routes<Return> {
+	readonly get: Route<Return>;
+	readonly post: Route<Return>;
+	readonly put: Route<Return>;
+	readonly delete: Route<Return>;
+	readonly head: Route<Return>;
+	readonly connect: Route<Return>;
+	readonly options: Route<Return>;
+	readonly trace: Route<Return>;
+	readonly patch: Route<Return>;
+}
+
+export interface FnRouter extends Routes<FnRouter> {
 	readonly done: () => FnServer;
 }
 
-export interface FnServer {
-	readonly get: Route<FnServer>;
-	readonly post: Route<FnServer>;
-	readonly put: Route<FnServer>;
-	readonly delete: Route<FnServer>;
+export interface FnServer extends Routes<FnServer> {
 	readonly route: (baseUri: string) => FnRouter;
 	readonly listen: (port: number) => Promise<void>;
 }
@@ -42,6 +45,26 @@ const createRouter = (
 	},
 	delete(uri, routeHandler) {
 		app.delete(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	head(uri, routeHandler) {
+		app.head(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	connect(uri, routeHandler) {
+		app.connect(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	options(uri, routeHandler) {
+		app.options(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	trace(uri, routeHandler) {
+		app.trace(`${baseUri}${uri}`, translate(routeHandler));
+		return this;
+	},
+	patch(uri, routeHandler) {
+		app.patch(`${baseUri}${uri}`, translate(routeHandler));
 		return this;
 	},
 	done() {
@@ -69,6 +92,26 @@ export const createServer = (
 		},
 		delete(uri, routeHandler) {
 			app.delete(uri, translate(routeHandler));
+			return this;
+		},
+		head(uri, routeHandler) {
+			app.head(uri, translate(routeHandler));
+			return this;
+		},
+		connect(uri, routeHandler) {
+			app.connect(uri, translate(routeHandler));
+			return this;
+		},
+		options(uri, routeHandler) {
+			app.options(uri, translate(routeHandler));
+			return this;
+		},
+		trace(uri, routeHandler) {
+			app.trace(uri, translate(routeHandler));
+			return this;
+		},
+		patch(uri, routeHandler) {
+			app.patch(uri, translate(routeHandler));
 			return this;
 		},
 		route(baseUri) {
