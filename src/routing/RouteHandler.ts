@@ -16,3 +16,45 @@ export type SimpleRouteHandler<ResB> = RouteHandler<
 	unknown,
 	ResB
 >;
+
+export type BodyRouteHandler<ReqB, ResB> = RouteHandler<
+	ReqB,
+	unknown,
+	unknown,
+	ResB
+>;
+
+export type QueryRouteHandler<Query, ResB> = RouteHandler<
+	unknown,
+	Query,
+	unknown,
+	ResB
+>;
+
+export type ParamsRouteHandler<Params, ResB> = RouteHandler<
+	unknown,
+	unknown,
+	Params,
+	ResB
+>;
+
+export type BodyQueryRouteHandler<ReqB, Query, ResB> = RouteHandler<
+	ReqB,
+	Query,
+	unknown,
+	ResB
+>;
+
+export type BodyParamsRouteHandler<ReqB, Params, ResB> = RouteHandler<
+	ReqB,
+	Params,
+	unknown,
+	ResB
+>;
+
+export type QueryParamsRouteHandler<Query, Params, ResB> = RouteHandler<
+	unknown,
+	Query,
+	Params,
+	ResB
+>;
