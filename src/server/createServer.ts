@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import { translate } from '../routing/RouteTranslator';
 import { FnServer } from './Server';
 import { createRouter } from './createRouter';
+import * as http from 'node:http';
 
 export const createServer = (
 	configureExpress?: (app: Express) => void
@@ -48,6 +49,9 @@ export const createServer = (
 		route(baseUri) {
 			return createRouter(this, app, baseUri);
 		},
-		listen: (port) => new Promise((resolve) => app.listen(port, resolve))
+		listen: (port) => new Promise((resolve) => app.listen(port, resolve)),
+		requestListener(req: http.IncomingMessage, res: http.ServerResponse) {
+			app(req, res);
+		}
 	};
 };

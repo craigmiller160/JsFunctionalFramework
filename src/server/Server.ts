@@ -1,4 +1,5 @@
 import { RouteHandler } from '../routing/RouteHandler';
+import * as http from 'node:http';
 
 export type Route<Return> = (uri: string, routeHandler: RouteHandler) => Return;
 
@@ -20,5 +21,6 @@ export interface FnRouter extends Routes<FnRouter> {
 
 export interface FnServer extends Routes<FnServer> {
 	readonly route: (baseUri: string) => FnRouter;
+	readonly requestListener: http.RequestListener;
 	readonly listen: (port: number) => Promise<void>;
 }
