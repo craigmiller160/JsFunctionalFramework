@@ -2,6 +2,7 @@
 import { FnRequest } from '../routing/components/FnRequest';
 import { FnResponse } from '../routing/components/FnResponse';
 import { FnServer } from '../server/Server';
+import { RouterRoute, Routes } from '../routing/Routes';
 
 const basic = (req: FnRequest<any>): FnResponse<any> => {
 	return {
@@ -46,3 +47,36 @@ export const addRoutes = (server: FnServer) => {
 		.get('/errorPromise', errorPromise)
 		.get('/errorReturned', errorReturned);
 };
+
+export const routes: Routes = [
+	{
+		uri: '/demo',
+		children: [
+			{
+				uri: '/basic',
+				method: 'GET',
+				handler: basic
+			},
+			{
+				uri: '/promise',
+				method: 'GET',
+				handler: promise
+			},
+			{
+				uri: '/error',
+				method: 'GET',
+				handler: error
+			},
+			{
+				uri: '/errorPromise',
+				method: 'GET',
+				handler: errorPromise
+			},
+			{
+				uri: '/errorReturned',
+				method: 'GET',
+				handler: errorReturned
+			}
+		]
+	}
+];

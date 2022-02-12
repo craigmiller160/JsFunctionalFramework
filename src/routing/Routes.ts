@@ -21,7 +21,7 @@ export interface Route extends BaseRoute {
 }
 
 export interface RouterRoute extends BaseRoute {
-	readonly children: RouterRoute | Route;
+	readonly children: ReadonlyArray<RouterRoute | Route>;
 }
 
 export type Routes = ReadonlyArray<RouterRoute | Route>;
