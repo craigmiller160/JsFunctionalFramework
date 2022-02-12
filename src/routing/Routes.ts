@@ -1,5 +1,6 @@
 import { RouteHandler } from './RouteHandler';
 import { Express } from 'express';
+import { translate } from './RouteTranslator';
 
 export type Method =
 	| 'get'
@@ -35,7 +36,10 @@ const isRoute = (route: BaseRoute): route is Route =>
 export const applyRoutes = (app: Express, routes: Routes, baseUri = '') => {
 	routes.forEach((route) => {
 		if (isRoute(route)) {
-			app[route.method](`${baseUri}${route.uri}`, route.handler);
+			app[route.method](
+				`${baseUri}${route.uri}`,
+				translate(route.handler)
+			);
 		} else if (isRouterRoute(route)) {
 			applyRoutes(app, route.children, `${baseUri}${route.uri}`);
 		} else {
