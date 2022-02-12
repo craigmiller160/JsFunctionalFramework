@@ -34,9 +34,14 @@ type RouteHandler<ReqB = any, ResB = any> = (
 	req: FnRequest<ReqB>
 ) => RouteHandlerResult<ResB>;
 
-const routeHandler: RouteHandler = (req) => {};
+const routeHandler: RouteHandler = (req) => {
+	return {
+		status: 200,
+		body: 'Hello World'
+	};
+};
 
-export const createRoute = (app: Express) => {
+export const createConcept1 = (app: Express) => {
 	app.get('/concept1/hello', (req, res, next) => {
 		const fnRes = routeHandler({
 			uriInfo: {
